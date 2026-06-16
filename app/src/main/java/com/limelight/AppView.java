@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.limelight.computers.ComputerManagerListener;
 import com.limelight.computers.ComputerManagerService;
+import com.limelight.preferences.PerAppSettings;
 import com.limelight.grid.AppGridAdapter;
 import com.limelight.nvstream.http.ComputerDetails;
 import com.limelight.nvstream.http.NvApp;
@@ -70,6 +71,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
     private final static int VIEW_DETAILS_ID = 5;
     private final static int CREATE_SHORTCUT_ID = 6;
     private final static int HIDE_APP_ID = 7;
+    private final static int PER_APP_SETTINGS_ID = 8;
 
     public final static String HIDDEN_APPS_PREF_FILENAME = "HiddenApps";
 
@@ -416,6 +418,8 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
 
         menu.add(Menu.NONE, VIEW_DETAILS_ID, 4, getResources().getString(R.string.applist_menu_details));
 
+        menu.add(Menu.NONE, PER_APP_SETTINGS_ID, 5, getResources().getString(R.string.applist_menu_per_app_settings));
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Only add an option to create shortcut if box art is loaded
             // and when we're in grid-mode (not list-mode).
@@ -425,7 +429,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 BitmapDrawable drawable = (BitmapDrawable)appImageView.getDrawable();
                 if (drawable != null && drawable.getBitmap() != null) {
                     // We have a bitmap loaded too
-                    menu.add(Menu.NONE, CREATE_SHORTCUT_ID, 5, getResources().getString(R.string.applist_menu_scut));
+                    menu.add(Menu.NONE, CREATE_SHORTCUT_ID, 6, getResources().getString(R.string.applist_menu_scut));
                 }
             }
         }
@@ -478,6 +482,14 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
 
             case VIEW_DETAILS_ID:
                 Dialog.displayDialog(AppView.this, getResources().getString(R.string.title_details), app.app.toString(), false);
+                return true;
+
+            case PER_APP_SETTINGS_ID:
+                Intent perAppIntent = new Intent(this, PerAppSettings.class);
+                perAppIntent.putExtra(PerAppSettings.EXTRA_PC_UUID, computer.uuid);
+                perAppIntent.putExtra(PerAppSettings.EXTRA_APP_ID, app.app.getAppId());
+                perAppIntent.putExtra(PerAppSettings.EXTRA_APP_NAME, app.app.getAppName());
+                startActivity(perAppIntent);
                 return true;
 
             case HIDE_APP_ID:

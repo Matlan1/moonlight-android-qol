@@ -122,6 +122,10 @@
     <string name="applist_menu_cancel">Cancel</string>
     <string name="applist_menu_details">View Details</string>
     <string name="applist_menu_scut">Create Shortcut</string>
+    <string name="applist_menu_per_app_settings">Per-app settings</string>
+    <string name="category_per_app_settings">Per-app stream settings</string>
+    <string name="title_override_app_settings">Override global settings for this app</string>
+    <string name="summary_override_app_settings">Use a custom resolution, FPS, and bitrate when launching this app instead of the global stream settings</string>
     <string name="applist_menu_tv_channel">Add to Channel</string>
     <string name="applist_menu_hide_app">Hide App</string>
     <string name="applist_refresh_title">App List</string>

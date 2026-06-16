@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekbar="http://schemas.moonlight-stream.com/apk/res/seekbar">
+
+    <PreferenceCategory android:title="@string/category_per_app_settings"
+        android:key="category_per_app_settings">
+        <CheckBoxPreference
+            android:key="checkbox_override_app_settings"
+            android:title="@string/title_override_app_settings"
+            android:summary="@string/summary_override_app_settings"
+            android:defaultValue="false" />
+        <ListPreference
+            android:key="list_resolution"
+            android:dependency="checkbox_override_app_settings"
+            android:title="@string/title_resolution_list"
+            android:summary="@string/summary_resolution_list"
+            android:entries="@array/resolution_names"
+            android:entryValues="@array/resolution_values"
+            android:defaultValue="1280x720" />
+        <ListPreference
+            android:key="list_fps"
+            android:dependency="checkbox_override_app_settings"
+            android:title="@string/title_fps_list"
+            android:summary="@string/summary_fps_list"
+            android:entries="@array/fps_names"
+            android:entryValues="@array/fps_values"
+            android:defaultValue="60" />
+        <com.limelight.preferences.SeekBarPreference
+            android:key="seekbar_bitrate_kbps"
+            android:dependency="checkbox_override_app_settings"
+            android:dialogMessage="@string/summary_seekbar_bitrate"
+            seekbar:min="500"
+            android:max="150000"
+            seekbar:step="500"
+            seekbar:keyStep="1000"
+            seekbar:divisor="1000"
+            android:summary="@string/summary_seekbar_bitrate"
+            android:text="@string/suffix_seekbar_bitrate_mbps"
+            android:title="@string/title_seekbar_bitrate" />
+    </PreferenceCategory>
+</PreferenceScreen>
