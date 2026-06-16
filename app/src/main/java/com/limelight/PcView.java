@@ -294,6 +294,11 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
     public void onDestroy() {
         super.onDestroy();
 
+        // Dismiss dialogs here (rather than in onStop) so they survive task-switching --
+        // e.g. the pairing PIN dialog stays up while the user switches to the host to
+        // enter the PIN -- while still being cleaned up when the activity is destroyed.
+        Dialog.closeDialogs();
+
         if (managerBinder != null) {
             unbindService(serviceConnection);
         }
@@ -322,7 +327,10 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
     protected void onStop() {
         super.onStop();
 
-        Dialog.closeDialogs();
+        // NB: We intentionally do NOT dismiss dialogs here. Closing them on every background
+        // would dismiss the pairing PIN dialog the moment the user switches away to enter the
+        // PIN on the host (common when the host is being streamed remotely). Dialogs are
+        // dismissed in onDestroy() instead, which still prevents window leaks on teardown.
     }
 
     @Override
